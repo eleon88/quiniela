@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-top: 1rem;
+}

@@ -1,8 +1,25 @@
 import { Routes } from '@angular/router';
+import { LayoutComponent } from './core/layout/layout';
 
 export const routes: Routes = [
-    {path: 'users', loadChildren: () => import('./features/users/users.routes').then(m => m.routes)},
-    { path: 'quiniela', loadChildren: () => import('./features/quiniela/quiniela.routes').then(m => m.routes)},
-    { path: '', redirectTo: '/quiniela', pathMatch: 'full' },
-    { path: 'games', loadChildren: () => import('./features/games/games.routes').then(m => m.routes) }
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', redirectTo: 'boards', pathMatch: 'full' },
+      {
+        path: 'boards',
+        loadChildren: () => import('./features/boards/boards.routes').then(m => m.boardsRoutes),
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./features/admin/admin.routes').then(m => m.adminRoutes),
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('./core/ui/login/login').then(m => m.LoginComponent),
+      },
+    ],
+  },
+  { path: '**', loadComponent: () => import('./shared/components/page-not-found/page-not-found').then(m => m.PageNotFoundComponent) },
 ];

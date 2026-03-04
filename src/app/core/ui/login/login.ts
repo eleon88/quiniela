@@ -1,10 +1,29 @@
-import { Component } from "@angular/core";
+import { Component, inject } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+import { AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: "app-login",
-    templateUrl: "./login.html",
-    styleUrls: ["./login.scss"]
+  selector: 'app-login',
+  standalone: true,
+  imports: [AsyncPipe, MatButtonModule, MatCardModule, MatProgressSpinnerModule],
+  templateUrl: './login.html',
+  styleUrl: './login.scss',
 })
 export class LoginComponent {
-    constructor() { }
+  protected auth = inject(AuthService);
+
+  login(): void {
+    this.auth.loginWithRedirect();
+  }
+
+  signup(): void {
+    this.auth.loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } });
+  }
+
+  logout(): void {
+    this.auth.logout({ logoutParams: { returnTo: window.location.origin } });
+  }
 }

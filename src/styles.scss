@@ -1,1 +1,93 @@
-/* You can add global styles to this file, and also import other style files */
+// =============================================
+// Quiniela Dark Theme - Global Styles
+// =============================================
+
+// Color tokens (from CLAUDE.md palette)
+:root {
+  --q-bg:            #121212; // background
+  --q-surface:       #1E1E1E; // cards / panels
+  --q-navbar:        #181818; // navbar
+  --q-input:         #2A2A2A; // input fields
+  --q-border:        #444444; // borders / dividers
+  --q-text:          #E0E0E0; // primary text
+  --q-text-muted:    #B0B0B0; // secondary text
+  --q-accent:        #888888; // accent
+  --q-accent-hover:  #3E59ED; // accent hover (blue)
+  --q-error:         #CF6679;
+  --q-success:       #81C784;
+  --q-warning:       #FFD54F;
+  --q-selection:     rgba(136, 136, 136, 0.25);
+}
+
+// =============================================
+// Bootstrap navbar override
+// =============================================
+
+.navbar-vscode {
+  background-color: var(--q-navbar) !important;
+  border-bottom: 1px solid var(--q-border);
+
+  .navbar-brand {
+    color: var(--q-text);
+    font-weight: 600;
+  }
+
+  .nav-link {
+    color: var(--q-text-muted) !important;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--q-text) !important;
+    }
+
+    &.active {
+      color: #fff !important;
+    }
+  }
+}
+
+// =============================================
+// Links
+// =============================================
+
+a {
+  color: var(--q-accent);
+
+  &:hover {
+    color: var(--q-accent-hover);
+  }
+}
+
+// =============================================
+// Scrollbar
+// =============================================
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--q-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--q-border);
+  border-radius: 0;
+
+  &:hover {
+    background: var(--q-text-muted);
+  }
+}
+
+// =============================================
+// Utility overrides for Bootstrap on dark bg
+// =============================================
+
+.text-danger {
+  color: var(--q-error) !important;
+}
+
+.text-success {
+  color: var(--q-success) !important;
+}

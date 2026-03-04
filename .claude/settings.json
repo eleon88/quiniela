@@ -1,0 +1,14 @@
+{
+  "autoUpdatesChannel": "latest",
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Write(.env)",
+      "Bash(**/.env *)",
+      "Read(**/.env)",
+      "Write(**/.env)",
+      "Read(*.env.*)",
+      "Write(*.env.*)"
+    ]
+  }
+}
