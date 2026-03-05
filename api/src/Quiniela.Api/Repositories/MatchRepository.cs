@@ -17,15 +17,18 @@ public class MatchRepository : IMatchRepository
     {
         using var conn = _db.CreateConnection();
         return await conn.QueryAsync<Match>(
-            "SELECT * FROM Match WHERE RoundId = @RoundId ORDER BY StartDateTime",
-            new { RoundId = roundId });
+            "dbo.usp_GetMatchesByRoundId",
+            new { RoundId = roundId },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Match?> GetByIdAsync(Guid id)
     {
         using var conn = _db.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<Match>(
-            "SELECT * FROM Match WHERE Id = @Id", new { Id = id });
+            "dbo.usp_GetMatchById",
+            new { Id = id },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task CreateBatchAsync(IEnumerable<Match> matches, IDbConnection? connection = null, IDbTransaction? transaction = null)
@@ -37,9 +40,10 @@ public class MatchRepository : IMatchRepository
             {
                 match.Id = Guid.NewGuid();
                 await conn.ExecuteAsync(
-                    @"INSERT INTO Match (Id, RoundId, HomeTeam, AwayTeam, StartDateTime, Result, IsLocked)
-                      VALUES (@Id, @RoundId, @HomeTeam, @AwayTeam, @StartDateTime, @Result, @IsLocked)",
-                    match, transaction);
+                    "dbo.usp_CreateMatch",
+                    new { match.Id, match.RoundId, match.HomeTeam, match.AwayTeam, match.StartDateTime, match.Result, match.IsLocked },
+                    transaction,
+                    commandType: CommandType.StoredProcedure);
             }
         }
         finally
@@ -54,8 +58,10 @@ public class MatchRepository : IMatchRepository
         try
         {
             await conn.ExecuteAsync(
-                "UPDATE Match SET Result = @Result, IsLocked = 1 WHERE Id = @Id",
-                new { Id = id, Result = result }, transaction);
+                "dbo.usp_UpdateMatchResult",
+                new { Id = id, Result = result },
+                transaction,
+                commandType: CommandType.StoredProcedure);
         }
         finally
         {

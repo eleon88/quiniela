@@ -17,15 +17,18 @@ public class RoundRepository : IRoundRepository
     {
         using var conn = _db.CreateConnection();
         return await conn.QueryAsync<Round>(
-            "SELECT * FROM Round WHERE BoardId = @BoardId ORDER BY CreatedAt DESC",
-            new { BoardId = boardId });
+            "dbo.usp_GetRoundsByBoardId",
+            new { BoardId = boardId },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Round?> GetByIdAsync(Guid id)
     {
         using var conn = _db.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<Round>(
-            "SELECT * FROM Round WHERE Id = @Id", new { Id = id });
+            "dbo.usp_GetRoundById",
+            new { Id = id },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Round> CreateAsync(Round round, IDbConnection? connection = null, IDbTransaction? transaction = null)
@@ -35,9 +38,10 @@ public class RoundRepository : IRoundRepository
         try
         {
             await conn.ExecuteAsync(
-                @"INSERT INTO Round (Id, BoardId, Name, Status, StartDateTime, EndDateTime)
-                  VALUES (@Id, @BoardId, @Name, @Status, @StartDateTime, @EndDateTime)",
-                round, transaction);
+                "dbo.usp_CreateRound",
+                new { round.Id, round.BoardId, round.Name, round.Status, round.StartDateTime, round.EndDateTime },
+                transaction,
+                commandType: CommandType.StoredProcedure);
             return round;
         }
         finally
@@ -52,8 +56,10 @@ public class RoundRepository : IRoundRepository
         try
         {
             await conn.ExecuteAsync(
-                "UPDATE Round SET Status = @Status WHERE Id = @Id",
-                new { Id = id, Status = status }, transaction);
+                "dbo.usp_UpdateRoundStatus",
+                new { Id = id, Status = status },
+                transaction,
+                commandType: CommandType.StoredProcedure);
         }
         finally
         {

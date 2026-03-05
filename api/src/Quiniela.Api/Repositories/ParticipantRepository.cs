@@ -16,17 +16,18 @@ public class ParticipantRepository : IParticipantRepository
     {
         using var conn = _db.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<Participant>(
-            "SELECT * FROM Participant WHERE Id = @Id", new { Id = id });
+            "dbo.usp_GetParticipantById",
+            new { Id = id },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<IEnumerable<Participant>> GetByRoundIdOrderedAsync(Guid roundId)
     {
         using var conn = _db.CreateConnection();
         return await conn.QueryAsync<Participant>(
-            @"SELECT * FROM Participant
-              WHERE RoundId = @RoundId AND IsActive = 1
-              ORDER BY Score DESC, DisplayName ASC",
-            new { RoundId = roundId });
+            "dbo.usp_GetActiveParticipantsByRoundId",
+            new { RoundId = roundId },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Participant> CreateAsync(Participant participant, IDbConnection? connection = null, IDbTransaction? transaction = null)
@@ -36,9 +37,10 @@ public class ParticipantRepository : IParticipantRepository
         try
         {
             await conn.ExecuteAsync(
-                @"INSERT INTO Participant (Id, RoundId, UserId, DisplayName, IsActive, Score)
-                  VALUES (@Id, @RoundId, @UserId, @DisplayName, @IsActive, @Score)",
-                participant, transaction);
+                "dbo.usp_CreateParticipant",
+                new { participant.Id, participant.RoundId, participant.UserId, participant.DisplayName, participant.IsActive, participant.Score },
+                transaction,
+                commandType: CommandType.StoredProcedure);
             return participant;
         }
         finally
@@ -53,8 +55,10 @@ public class ParticipantRepository : IParticipantRepository
         try
         {
             await conn.ExecuteAsync(
-                "UPDATE Participant SET IsActive = 1 WHERE Id = @Id",
-                new { Id = id }, transaction);
+                "dbo.usp_ActivateParticipant",
+                new { Id = id },
+                transaction,
+                commandType: CommandType.StoredProcedure);
         }
         finally
         {
@@ -68,17 +72,10 @@ public class ParticipantRepository : IParticipantRepository
         try
         {
             await conn.ExecuteAsync(
-                @"UPDATE p SET p.Score = (
-                    SELECT COUNT(*)
-                    FROM Prediction pred
-                    INNER JOIN Match m ON pred.MatchId = m.Id
-                    WHERE pred.ParticipantId = p.Id
-                      AND m.Result <> 3
-                      AND CAST(pred.SelectedOutcome AS TINYINT) = CAST(m.Result AS TINYINT)
-                  )
-                  FROM Participant p
-                  WHERE p.RoundId = @RoundId AND p.IsActive = 1",
-                new { RoundId = roundId }, transaction);
+                "dbo.usp_RecalculateScoresByRoundId",
+                new { RoundId = roundId },
+                transaction,
+                commandType: CommandType.StoredProcedure);
         }
         finally
         {

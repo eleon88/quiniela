@@ -21,9 +21,10 @@ public class PredictionRepository : IPredictionRepository
             {
                 prediction.Id = Guid.NewGuid();
                 await conn.ExecuteAsync(
-                    @"INSERT INTO Prediction (Id, ParticipantId, MatchId, SelectedOutcome)
-                      VALUES (@Id, @ParticipantId, @MatchId, @SelectedOutcome)",
-                    prediction, transaction);
+                    "dbo.usp_CreatePrediction",
+                    new { prediction.Id, prediction.ParticipantId, prediction.MatchId, prediction.SelectedOutcome },
+                    transaction,
+                    commandType: CommandType.StoredProcedure);
             }
         }
         finally

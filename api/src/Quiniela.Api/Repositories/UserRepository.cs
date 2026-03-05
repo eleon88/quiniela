@@ -1,3 +1,4 @@
+using System.Data;
 using Dapper;
 using Quiniela.Api.Entities;
 using Quiniela.Api.Infrastructure;
@@ -15,7 +16,9 @@ public class UserRepository : IUserRepository
     {
         using var conn = _db.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<User>(
-            "SELECT * FROM [User] WHERE Auth0Id = @Auth0Id", new { Auth0Id = auth0Id });
+            "dbo.usp_GetUserByAuth0Id",
+            new { Auth0Id = auth0Id },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<User> CreateAsync(User user)
@@ -23,8 +26,9 @@ public class UserRepository : IUserRepository
         using var conn = _db.CreateConnection();
         user.Id = Guid.NewGuid();
         await conn.ExecuteAsync(
-            @"INSERT INTO [User] (Id, Auth0Id, Email, DisplayName, IsPlatformAdmin)
-              VALUES (@Id, @Auth0Id, @Email, @DisplayName, @IsPlatformAdmin)", user);
+            "dbo.usp_CreateUser",
+            new { user.Id, user.Auth0Id, user.Email, user.DisplayName, user.IsPlatformAdmin },
+            commandType: CommandType.StoredProcedure);
         return user;
     }
 }

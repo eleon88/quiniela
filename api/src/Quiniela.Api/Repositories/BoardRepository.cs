@@ -16,14 +16,17 @@ public class BoardRepository : IBoardRepository
     {
         using var conn = _db.CreateConnection();
         return await conn.QueryAsync<Board>(
-            "SELECT * FROM Board WHERE IsPublic = 1 ORDER BY CreatedAt DESC");
+            "dbo.usp_GetPublicBoards",
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Board?> GetByIdAsync(Guid id)
     {
         using var conn = _db.CreateConnection();
         return await conn.QuerySingleOrDefaultAsync<Board>(
-            "SELECT * FROM Board WHERE Id = @Id", new { Id = id });
+            "dbo.usp_GetBoardById",
+            new { Id = id },
+            commandType: CommandType.StoredProcedure);
     }
 
     public async Task<Board> CreateAsync(Board board, IDbConnection? connection = null, IDbTransaction? transaction = null)
@@ -33,9 +36,10 @@ public class BoardRepository : IBoardRepository
         try
         {
             await conn.ExecuteAsync(
-                @"INSERT INTO Board (Id, Name, Description, OwnerUserId, IsPublic, IsPremium)
-                  VALUES (@Id, @Name, @Description, @OwnerUserId, @IsPublic, @IsPremium)",
-                board, transaction);
+                "dbo.usp_CreateBoard",
+                new { board.Id, board.Name, board.Description, board.OwnerUserId, board.IsPublic, board.IsPremium },
+                transaction,
+                commandType: CommandType.StoredProcedure);
             return board;
         }
         finally
