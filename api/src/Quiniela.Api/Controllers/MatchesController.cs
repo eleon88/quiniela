@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quiniela.Api.DTOs.Matches;
+using Quiniela.Api.Infrastructure;
 using Quiniela.Api.Managers.Interfaces;
 
 namespace Quiniela.Api.Controllers;
@@ -21,6 +22,7 @@ public class MatchesController : ControllerBase
 
     [HttpPost("api/round/{id:guid}/matches")]
     [Authorize]
+    [BoardAdminAuthorize(BoardResourceType.Round)]
     public async Task<IActionResult> CreateBatch(Guid id, [FromBody] CreateMatchesRequest request)
     {
         var matches = await _matchManager.CreateBatchAsync(id, request);
@@ -29,6 +31,7 @@ public class MatchesController : ControllerBase
 
     [HttpPut("api/match/{id:guid}/result")]
     [Authorize]
+    [BoardAdminAuthorize(BoardResourceType.Match)]
     public async Task<IActionResult> UpdateResult(Guid id, [FromBody] UpdateMatchResultRequest request)
     {
         await _matchManager.UpdateResultAsync(id, request.Result);

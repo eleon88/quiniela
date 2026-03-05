@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quiniela.Api.DTOs.Rounds;
+using Quiniela.Api.Infrastructure;
 using Quiniela.Api.Managers.Interfaces;
 
 namespace Quiniela.Api.Controllers;
@@ -21,6 +22,7 @@ public class RoundsController : ControllerBase
 
     [HttpPut("api/round/{id:guid}/status")]
     [Authorize]
+    [BoardAdminAuthorize(BoardResourceType.Round)]
     public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateRoundStatusRequest request)
     {
         await _roundManager.UpdateStatusAsync(id, request.Status);

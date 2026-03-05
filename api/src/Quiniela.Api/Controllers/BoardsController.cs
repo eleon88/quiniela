@@ -52,6 +52,7 @@ public class BoardsController : ControllerBase
 
     [HttpPost("{id:guid}/round")]
     [Authorize]
+    [BoardAdminAuthorize(BoardResourceType.Board)]
     public async Task<IActionResult> CreateRound(Guid id, [FromBody] CreateRoundRequest request)
     {
         var round = await _roundManager.CreateAsync(id, request);

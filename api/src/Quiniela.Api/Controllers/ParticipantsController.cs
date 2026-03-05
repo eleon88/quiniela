@@ -39,6 +39,7 @@ public class ParticipantsController : ControllerBase
 
     [HttpPut("api/participant/{id:guid}/activate")]
     [Authorize]
+    [BoardAdminAuthorize(BoardResourceType.Participant)]
     public async Task<IActionResult> Activate(Guid id)
     {
         await _participantManager.ActivateAsync(id);

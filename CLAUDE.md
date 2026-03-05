@@ -6,6 +6,8 @@ Keep your replies extremely concise and focus on coveying the key information. N
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Whenever working with any third-party library or something similar, you MUST look up the official documentation to ensure that you're working with up-to-date information. Use the DocsExplorer subagent for efficient documentation lookup.
+
 ## Project Overview
 
 Quiniela SaaS platform — a prediction pool web app where users create boards, define rounds with matches, and participants submit predictions. See `src/SPEC.MD` for the full domain model and feature specification.

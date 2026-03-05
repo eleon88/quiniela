@@ -1,8 +1,9 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideAuth0 } from '@auth0/auth0-angular';
+import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 
+import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -10,12 +11,16 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authHttpInterceptorFn])),
     provideAuth0({
-      domain: 'eleon88.us.auth0.com',
-      clientId: 'uGhqQcfAwb1qock4381gaeL2nwu2fP6X',
+      domain: environment.auth0Domain,
+      clientId: environment.auth0ClientId,
       authorizationParams: {
         redirect_uri: window.location.origin,
+        audience: environment.auth0Audience,
+      },
+      httpInterceptor: {
+        allowedList: [`${environment.apiUrl}/*`],
       },
     }),
   ],
