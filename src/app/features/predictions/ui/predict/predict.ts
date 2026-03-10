@@ -2,7 +2,6 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-predict',
-  standalone: true,
   templateUrl: './predict.html',
   styleUrl: './predict.scss',
 })

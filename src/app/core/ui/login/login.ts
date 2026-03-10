@@ -7,7 +7,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [AsyncPipe, MatButtonModule, MatCardModule, MatProgressSpinnerModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',

@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-board-detail',
-  standalone: true,
   imports: [RouterLink],
   templateUrl: './board-detail.html',
   styleUrl: './board-detail.scss',

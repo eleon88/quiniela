@@ -15,10 +15,10 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        @if (auth.isAuthenticated$ | async) {
-          @if (auth.user$ | async; as user) {
+        @if (isAuthenticated()) {
+          @if (user(); as u) {
             <li class="nav-item">
-              <span class="nav-link">{{ user.name || user.email }}</span>
+              <span class="nav-link">{{ u.name || u.email }}</span>
             </li>
           }
           <li class="nav-item">

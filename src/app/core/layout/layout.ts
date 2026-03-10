@@ -1,17 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-layout',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, AsyncPipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
 export class LayoutComponent {
-  protected auth = inject(AuthService);
+  private auth = inject(AuthService);
+  protected isAuthenticated = toSignal(this.auth.isAuthenticated$, { initialValue: false });
+  protected user = toSignal(this.auth.user$);
 
   login(): void {
     this.auth.loginWithRedirect();
