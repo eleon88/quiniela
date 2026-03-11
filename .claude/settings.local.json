@@ -1,8 +1,31 @@
 {
   "permissions": {
     "allow": [
+      "WebSearch",
+      "WebFetch(domain:angular.dev)",
+      "WebFetch(domain:v20.angular.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:npmjs.com)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:blog.ninja-squad.com)",
+      "WebFetch(domain:timdeschryver.dev)",
+      "WebFetch(domain:www.rainerhahnekamp.com)",
       "mcp__context7__query-docs",
-      "mcp__context7__resolve-library-id"
+      "mcp__context7__resolve-library-id",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(npm list:*)",
+      "Bash(npm install @angular/*:*)",
+      "Bash(npm install rxjs:*)",
+      "Bash(npm install ngx-*:*)",
+      "Bash(ng test:*)",
+      "Bash(cat angular.json:*)",
+      "Bash(cat node_modules/@angular/build/src/builders/unit-test/schema.json:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__plugin_playwright_playwright__browser_snapshot"
     ]
   }
 }

@@ -1,14 +1,42 @@
 {
-  "autoUpdatesChannel": "latest",
+  "autoUpdatesChannel": "stable",
+
   "permissions": {
     "deny": [
       "Read(.env)",
       "Write(.env)",
-      "Bash(**/.env *)",
       "Read(**/.env)",
       "Write(**/.env)",
       "Read(*.env.*)",
-      "Write(*.env.*)"
+      "Write(*.env.*)",
+
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+
+      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
+
+      "Write(package-lock.json)",
+      "Write(yarn.lock)"
+    ]
+  },
+
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  },
+
+  "context": {
+    "framework": "Angular 21",
+    "preferences": [
+      "Use standalone components",
+      "Prefer Angular signals for state management",
+      "Use inject() instead of constructor injection",
+      "Prefer new Angular control flow (@if, @for, @switch)",
+      "Avoid NgModules unless absolutely necessary",
+      "Use provideHttpClient and provideRouter APIs",
+      "Use RxJS only when necessary; prefer signals",
+      "Prefer strongly typed Angular forms",
+      "Follow Angular style guide"
     ]
   }
 }

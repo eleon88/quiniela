@@ -6,14 +6,14 @@
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | Angular (latest, standalone components, signals, zoneless) |
+| Frontend | Angular 21 (latest, standalone components, signals for reactive state, zoneless, modern dependency injection patterns, new control flow syntax) |
 | Backend | .NET 8 Web API |
 | Data Access | Dapper |
 | Database | MS SQL Server |
 | Authentication | Auth0 (`@auth0/auth0-angular`) |
 | Realtime | SignalR |
 | Source Control | Git |
-| Styling | SCSS + Bootstrap 5 + Angular Material |
+| Styling | SCSS + Bootstrap 5 + Angular 21 Material |
 
 ## 2. Core Domain Model
 
@@ -315,4 +315,16 @@ Critical indexes:
 - Scalable board isolation
 - Monetization-ready
 
+## 16 Key Goals
+
+- Clean architecture
+- Strong typing
+- Modern Angular patterns
+- Minimal unnecessary dependencies
+- Maintainable and scalable code
+
+## Claude should assume
+
 > This is portfolio-level SaaS engineering.
+
+

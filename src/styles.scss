@@ -91,3 +91,12 @@ a {
 .text-success {
   color: var(--q-success) !important;
 }
+
+// =============================================
+// Base overrides (must come after Bootstrap)
+// =============================================
+
+body {
+  background-color: var(--q-bg) !important;
+  color: var(--q-text) !important;
+}
