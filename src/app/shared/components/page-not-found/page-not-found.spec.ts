@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { App } from './app';
+import { PageNotFoundComponent } from './page-not-found';
 
-describe('App', () => {
+describe('PageNotFoundComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [PageNotFoundComponent],
       providers: [provideRouter([])],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
+  it('should create', () => {
+    const fixture = TestBed.createComponent(PageNotFoundComponent);
     expect(fixture.componentInstance).toBeTruthy();
   });
 });

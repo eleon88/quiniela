@@ -25,7 +25,14 @@
       "Bash(cat angular.json:*)",
       "Bash(cat node_modules/@angular/build/src/builders/unit-test/schema.json:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "mcp__plugin_playwright_playwright__browser_snapshot"
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:angular.schule)",
+      "WebFetch(domain:analogjs.org)",
+      "WebFetch(domain:www.telerik.com)",
+      "WebFetch(domain:www.angulararchitects.io)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
