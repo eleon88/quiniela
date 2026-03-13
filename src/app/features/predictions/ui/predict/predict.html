@@ -1,3 +1,80 @@
-<h2>Predict</h2>
-<p>Board ID: {{ boardId() }} | Round ID: {{ roundId() }}</p>
-<p>Prediction form placeholder</p>
+<div class="container py-4">
+  <a [routerLink]="['/boards', boardId(), 'rounds', roundId()]" class="back-link">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Round Detail</span>
+  </a>
+
+  @if (round.isLoading() || matches.isLoading()) {
+    <app-loading />
+  } @else if (round.error() || matches.error()) {
+    <app-error-message message="Failed to load round data. Please try again." />
+  } @else if (round.value(); as r) {
+    <div class="predict-header mt-3 mb-4">
+      <h2 class="mb-1">Submit Prediction</h2>
+      <p class="round-name">{{ r.name }}</p>
+    </div>
+
+    <div class="name-field mb-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Display Name</mat-label>
+        <input matInput [formControl]="displayName" placeholder="Enter your name" />
+      </mat-form-field>
+    </div>
+
+    <div class="matches-list">
+      @for (match of matches.value(); track match.id) {
+        <div class="match-card" [class.has-selection]="getSelection(match.id) !== undefined">
+          <div class="match-teams">
+            <span class="team home-team">{{ match.homeTeam }}</span>
+            <span class="vs">vs</span>
+            <span class="team away-team">{{ match.awayTeam }}</span>
+          </div>
+          <div class="outcome-buttons">
+            <button
+              type="button"
+              class="outcome-btn"
+              [class.selected]="getSelection(match.id) === SelectedOutcome.HomeWin"
+              (click)="selectOutcome(match.id, SelectedOutcome.HomeWin)"
+            >
+              Home
+            </button>
+            <button
+              type="button"
+              class="outcome-btn draw"
+              [class.selected]="getSelection(match.id) === SelectedOutcome.Draw"
+              (click)="selectOutcome(match.id, SelectedOutcome.Draw)"
+            >
+              Draw
+            </button>
+            <button
+              type="button"
+              class="outcome-btn"
+              [class.selected]="getSelection(match.id) === SelectedOutcome.AwayWin"
+              (click)="selectOutcome(match.id, SelectedOutcome.AwayWin)"
+            >
+              Away
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (submitError()) {
+      <app-error-message [message]="submitError()" />
+    }
+
+    <div class="submit-area mt-4">
+      <button
+        mat-flat-button
+        [disabled]="!canSubmit()"
+        (click)="submit()"
+      >
+        @if (submitting()) {
+          Submitting...
+        } @else {
+          Submit Prediction
+        }
+      </button>
+    </div>
+  }
+</div>

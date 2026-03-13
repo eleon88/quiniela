@@ -58,6 +58,12 @@ public class BoardManager : IBoardManager
         return MapToResponse(board);
     }
 
+    public async Task<IEnumerable<BoardResponse>> GetBoardsByAdminAsync(Guid userId)
+    {
+        var boards = await _boardRepo.GetBoardsByAdminAsync(userId);
+        return boards.Select(MapToResponse);
+    }
+
     private static BoardResponse MapToResponse(Board b) =>
         new(b.Id, b.Name, b.Description, b.OwnerUserId, b.IsPublic, b.IsPremium, b.CreatedAt);
 }

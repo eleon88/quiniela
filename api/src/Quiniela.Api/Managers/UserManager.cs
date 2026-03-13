@@ -10,10 +10,17 @@ public class UserManager : IUserManager
 
     public UserManager(IUserRepository userRepo) => _userRepo = userRepo;
 
-    public async Task<User> GetOrCreateByAuth0IdAsync(string auth0Id, string email, string displayName)
+    public Task<User?> GetByAuth0IdAsync(string auth0Id) => _userRepo.GetByAuth0IdAsync(auth0Id);
+
+    public async Task<User> SyncUserAsync(string auth0Id, string email, string displayName)
     {
         var user = await _userRepo.GetByAuth0IdAsync(auth0Id);
-        if (user != null) return user;
+        if (user != null)
+        {
+            if (string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(email))
+                await _userRepo.UpdateProfileAsync(auth0Id, email, displayName);
+            return user;
+        }
 
         return await _userRepo.CreateAsync(new User
         {

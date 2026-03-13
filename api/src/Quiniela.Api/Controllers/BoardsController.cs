@@ -29,6 +29,18 @@ public class BoardsController : ControllerBase
         return Ok(boards);
     }
 
+    [HttpGet("admin")]
+    [Authorize]
+    public async Task<IActionResult> GetByAdmin()
+    {
+        var auth0Id = Auth0ClaimsHelper.GetAuth0Id(User);
+        var user = await _userManager.GetByAuth0IdAsync(auth0Id);
+        if (user is null) return Unauthorized();
+
+        var boards = await _boardManager.GetBoardsByAdminAsync(user.Id);
+        return Ok(boards);
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -41,10 +53,8 @@ public class BoardsController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateBoardRequest request)
     {
         var auth0Id = Auth0ClaimsHelper.GetAuth0Id(User);
-        var user = await _userManager.GetOrCreateByAuth0IdAsync(
-            auth0Id,
-            User.FindFirst("email")?.Value ?? "",
-            User.FindFirst("name")?.Value ?? auth0Id);
+        var user = await _userManager.GetByAuth0IdAsync(auth0Id);
+        if (user is null) return Unauthorized();
 
         var board = await _boardManager.CreateAsync(request, user.Id);
         return CreatedAtAction(nameof(GetById), new { id = board.Id }, board);

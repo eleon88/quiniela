@@ -1,3 +1,181 @@
-<h2>Admin - Round</h2>
-<p>Board ID: {{ boardId() }} | Round ID: {{ roundId() }}</p>
-<p>Admin round management placeholder</p>
+<div class="container py-4">
+  @if (round.isLoading()) {
+    <app-loading />
+  } @else if (round.error()) {
+    <app-error-message message="Failed to load round. Please try again." />
+  } @else if (round.value(); as r) {
+    <div class="page-header mb-4">
+      <a [routerLink]="['/admin/boards', boardId()]" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        <span>{{ r.name }}</span>
+      </a>
+      <div class="d-flex align-items-center gap-3 mt-3 flex-wrap">
+        <h2 class="mb-0">{{ r.name }}</h2>
+        <span class="status-badge {{ statusClass[r.status] }}">{{ statusLabel[r.status] }}</span>
+        <span class="admin-badge">Admin</span>
+      </div>
+      <div class="round-dates mt-2">
+        <mat-icon>event</mat-icon>
+        <span>{{ r.startDateTime | date: 'mediumDate' }}</span>
+        <span class="separator">–</span>
+        <span>{{ r.endDateTime | date: 'mediumDate' }}</span>
+      </div>
+    </div>
+
+    <!-- Status Management -->
+    @if (nextStatus(r.status) !== null) {
+      <div class="section mb-4">
+        <h3 class="section-title mb-3">Status</h3>
+        <div class="status-action d-flex align-items-center gap-3 flex-wrap">
+          <p class="mb-0 text-secondary">
+            Advance round from <strong>{{ statusLabel[r.status] }}</strong> to <strong>{{ statusLabel[nextStatus(r.status)!] }}</strong>
+          </p>
+          <button
+            mat-flat-button
+            (click)="advanceStatus()"
+            [disabled]="updatingStatus()"
+          >
+            @if (updatingStatus()) { Updating... } @else { Mark as {{ statusLabel[nextStatus(r.status)!] }} }
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Matches Section -->
+    <div class="section mb-4">
+      <div class="section-header d-flex align-items-center justify-content-between mb-3">
+        <h3 class="section-title mb-0">Matches</h3>
+        <button mat-stroked-button (click)="toggleAddMatchForm()">
+          <mat-icon>{{ showAddMatchForm() ? 'close' : 'add' }}</mat-icon>
+          {{ showAddMatchForm() ? 'Cancel' : 'Add Match' }}
+        </button>
+      </div>
+
+      @if (showAddMatchForm()) {
+        <div class="create-form mb-3">
+          <form [formGroup]="addMatchForm" (ngSubmit)="submitAddMatch()">
+            <div class="row g-2 mb-2">
+              <div class="col-md-5">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Home Team</mat-label>
+                  <input matInput formControlName="homeTeam" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-5">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Away Team</mat-label>
+                  <input matInput formControlName="awayTeam" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Date & Time</mat-label>
+                  <input matInput type="datetime-local" formControlName="startDateTime" />
+                </mat-form-field>
+              </div>
+            </div>
+            @if (addMatchError()) {
+              <app-error-message [message]="addMatchError()!" />
+            }
+            <button mat-flat-button type="submit" [disabled]="addMatchForm.invalid || submittingMatch()">
+              @if (submittingMatch()) { Saving... } @else { Add Match }
+            </button>
+          </form>
+        </div>
+      }
+
+      @if (matches.isLoading()) {
+        <app-loading />
+      } @else if (matches.error()) {
+        <app-error-message message="Failed to load matches." />
+      } @else if (!matches.value()?.length) {
+        <p class="text-secondary">No matches yet. Add the first one above.</p>
+      } @else {
+        <div class="matches-list">
+          @for (match of matches.value(); track match.id) {
+            <div class="match-row" [class.updating]="updatingMatchId() === match.id">
+              <div class="match-teams">
+                <span class="team home-team">{{ match.homeTeam }}</span>
+                <span class="vs">vs</span>
+                <span class="team away-team">{{ match.awayTeam }}</span>
+              </div>
+              <div class="match-meta">
+                <span class="match-date">
+                  <mat-icon>schedule</mat-icon>
+                  {{ match.startDateTime | date: 'MMM d, h:mm a' }}
+                </span>
+                @if (match.isLocked) {
+                  <mat-icon class="lock-icon" title="Locked">lock</mat-icon>
+                }
+              </div>
+              <div class="result-buttons">
+                <button
+                  mat-stroked-button
+                  class="result-btn"
+                  [class.active]="match.result === MatchResult.HomeWin"
+                  [disabled]="match.isLocked || !!updatingMatchId()"
+                  (click)="setMatchResult(match.id, MatchResult.HomeWin)"
+                >H</button>
+                <button
+                  mat-stroked-button
+                  class="result-btn"
+                  [class.active]="match.result === MatchResult.Draw"
+                  [disabled]="match.isLocked || !!updatingMatchId()"
+                  (click)="setMatchResult(match.id, MatchResult.Draw)"
+                >D</button>
+                <button
+                  mat-stroked-button
+                  class="result-btn"
+                  [class.active]="match.result === MatchResult.AwayWin"
+                  [disabled]="match.isLocked || !!updatingMatchId()"
+                  (click)="setMatchResult(match.id, MatchResult.AwayWin)"
+                >A</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Participants Section -->
+    <div class="section">
+      <h3 class="section-title mb-3">Participants</h3>
+
+      @if (participants.isLoading()) {
+        <app-loading />
+      } @else if (participants.error()) {
+        <app-error-message message="Failed to load participants." />
+      } @else if (!participants.value()?.length) {
+        <p class="text-secondary">No participants yet.</p>
+      } @else {
+        <div class="participants-list">
+          @for (p of participants.value(); track p.id) {
+            <div class="participant-row" [class.inactive]="!p.isActive">
+              <div class="participant-info">
+                <span class="participant-name">{{ p.displayName }}</span>
+                @if (!p.userId) {
+                  <span class="anon-badge">Anonymous</span>
+                }
+              </div>
+              <div class="participant-actions d-flex align-items-center gap-2">
+                <span class="participant-score">{{ p.score }} pts</span>
+                @if (!p.isActive) {
+                  <button
+                    mat-stroked-button
+                    class="activate-btn"
+                    [disabled]="activatingParticipantId() === p.id"
+                    (click)="activateParticipant(p.id)"
+                  >
+                    @if (activatingParticipantId() === p.id) { Activating... } @else { Activate }
+                  </button>
+                } @else {
+                  <span class="active-badge">Active</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

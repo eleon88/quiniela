@@ -26,11 +26,8 @@ public class ParticipantsController : ControllerBase
         if (User.Identity?.IsAuthenticated == true)
         {
             var auth0Id = Auth0ClaimsHelper.GetAuth0Id(User);
-            var user = await _userManager.GetOrCreateByAuth0IdAsync(
-                auth0Id,
-                User.FindFirst("email")?.Value ?? "",
-                User.FindFirst("name")?.Value ?? auth0Id);
-            userId = user.Id;
+            var user = await _userManager.GetByAuth0IdAsync(auth0Id);
+            userId = user?.Id;
         }
 
         var participant = await _participantManager.ParticipateAsync(roundId, request, userId);

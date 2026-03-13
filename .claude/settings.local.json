@@ -31,7 +31,9 @@
       "WebFetch(domain:analogjs.org)",
       "WebFetch(domain:www.telerik.com)",
       "WebFetch(domain:www.angulararchitects.io)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }

@@ -7,4 +7,5 @@ public interface IBoardManager
     Task<IEnumerable<BoardResponse>> GetPublicBoardsAsync();
     Task<BoardResponse> GetByIdAsync(Guid id);
     Task<BoardResponse> CreateAsync(CreateBoardRequest request, Guid ownerUserId);
+    Task<IEnumerable<BoardResponse>> GetBoardsByAdminAsync(Guid userId);
 }

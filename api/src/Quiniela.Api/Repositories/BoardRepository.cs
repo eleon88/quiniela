@@ -47,4 +47,13 @@ public class BoardRepository : IBoardRepository
             if (connection == null) conn.Dispose();
         }
     }
+
+    public async Task<IEnumerable<Board>> GetBoardsByAdminAsync(Guid userId)
+    {
+        using var conn = _db.CreateConnection();
+        return await conn.QueryAsync<Board>(
+            "dbo.usp_GetBoardsByAdmin",
+            new { UserId = userId },
+            commandType: CommandType.StoredProcedure);
+    }
 }

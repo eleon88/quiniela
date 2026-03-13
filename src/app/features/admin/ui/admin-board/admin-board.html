@@ -1,3 +1,82 @@
-<h2>Admin - Board</h2>
-<p>Board ID: {{ boardId() }}</p>
-<p>Admin board management placeholder</p>
+<div class="container py-4">
+  @if (board.isLoading()) {
+    <app-loading />
+  } @else if (board.error()) {
+    <app-error-message message="Failed to load board. Please try again." />
+  } @else if (board.value(); as b) {
+    <div class="page-header mb-4">
+      <a routerLink="/boards" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Boards</span>
+      </a>
+      <div class="d-flex align-items-center gap-3 mt-3">
+        <h2 class="mb-0">{{ b.name }}</h2>
+        <span class="admin-badge">Admin</span>
+      </div>
+      @if (b.description) {
+        <p class="board-description mt-2">{{ b.description }}</p>
+      }
+    </div>
+
+    <div class="section-header d-flex align-items-center justify-content-between mb-3">
+      <h3 class="section-title mb-0">Rounds</h3>
+      <button mat-stroked-button (click)="toggleCreateForm()">
+        <mat-icon>{{ showCreateForm() ? 'close' : 'add' }}</mat-icon>
+        {{ showCreateForm() ? 'Cancel' : 'Create Round' }}
+      </button>
+    </div>
+
+    @if (showCreateForm()) {
+      <div class="create-form mb-4">
+        <form [formGroup]="createForm" (ngSubmit)="submitCreateRound()">
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Round Name</mat-label>
+            <input matInput formControlName="name" placeholder="e.g. Liga MX Round 9" />
+          </mat-form-field>
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Start Date & Time</mat-label>
+                <input matInput type="datetime-local" formControlName="startDateTime" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>End Date & Time</mat-label>
+                <input matInput type="datetime-local" formControlName="endDateTime" />
+              </mat-form-field>
+            </div>
+          </div>
+          @if (createError()) {
+            <app-error-message [message]="createError()!" />
+          }
+          <button mat-flat-button type="submit" [disabled]="createForm.invalid || submitting()">
+            @if (submitting()) { Saving... } @else { Create Round }
+          </button>
+        </form>
+      </div>
+    }
+
+    @if (rounds.isLoading()) {
+      <app-loading />
+    } @else if (rounds.error()) {
+      <app-error-message message="Failed to load rounds." />
+    } @else if (!rounds.value()?.length) {
+      <p class="text-secondary">No rounds yet. Create the first one above.</p>
+    } @else {
+      <div class="rounds-list">
+        @for (round of rounds.value(); track round.id) {
+          <div class="round-row">
+            <div class="round-info">
+              <span class="round-name">{{ round.name }}</span>
+              <span class="status-badge {{ statusClass[round.status] }}">{{ statusLabel[round.status] }}</span>
+            </div>
+            <a mat-stroked-button [routerLink]="['/admin/boards', boardId(), 'rounds', round.id]">
+              <mat-icon>settings</mat-icon> Manage
+            </a>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

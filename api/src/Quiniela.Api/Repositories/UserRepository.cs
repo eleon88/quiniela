@@ -31,4 +31,13 @@ public class UserRepository : IUserRepository
             commandType: CommandType.StoredProcedure);
         return user;
     }
+
+    public async Task UpdateProfileAsync(string auth0Id, string email, string displayName)
+    {
+        using var conn = _db.CreateConnection();
+        await conn.ExecuteAsync(
+            "dbo.usp_UpdateUserProfile",
+            new { Auth0Id = auth0Id, Email = email, DisplayName = displayName },
+            commandType: CommandType.StoredProcedure);
+    }
 }
