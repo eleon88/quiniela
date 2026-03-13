@@ -20,7 +20,14 @@ public class RoundsController : ControllerBase
         return Ok(rounds);
     }
 
-    [HttpPut("api/round/{id:guid}/status")]
+    [HttpGet("api/rounds/{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var round = await _roundManager.GetByIdAsync(id);
+        return round is null ? NotFound() : Ok(round);
+    }
+
+    [HttpPut("api/rounds/{id:guid}/status")]
     [Authorize]
     [BoardAdminAuthorize(BoardResourceType.Round)]
     public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateRoundStatusRequest request)

@@ -2,13 +2,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #3e59ed;
+    color: var(--q-accent-hover);
   }
 
   mat-icon {
@@ -19,7 +19,7 @@
 }
 
 .board-description {
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   font-size: 0.95rem;
 }
 
@@ -30,23 +30,23 @@
   font-weight: 500;
 
   &.badge-public {
-    background-color: #1e4d2b;
-    color: #6fcf97;
+    background-color: var(--q-status-open-bg);
+    color: var(--q-status-open-fg);
   }
 
   &.badge-private {
-    background-color: #3d1a1a;
-    color: #e57373;
+    background-color: var(--q-badge-private-bg);
+    color: var(--q-badge-private-fg);
   }
 
   &.badge-premium {
-    background-color: #3d2e00;
-    color: #f5c842;
+    background-color: var(--q-badge-premium-bg);
+    color: var(--q-badge-premium-fg);
   }
 }
 
 .rounds-card {
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   max-width: 400px;
 }

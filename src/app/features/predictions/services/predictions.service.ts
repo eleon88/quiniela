@@ -10,6 +10,6 @@ export class PredictionsService {
   private apiUrl = `${environment.apiUrl}/api`;
 
   participate(roundId: string, request: ParticipateRequest): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/round/${roundId}/participate`, request);
+    return this.http.post<void>(`${this.apiUrl}/rounds/${roundId}/participate`, request);
   }
 }

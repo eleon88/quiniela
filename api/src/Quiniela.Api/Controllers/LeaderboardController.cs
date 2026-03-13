@@ -10,7 +10,7 @@ public class LeaderboardController : ControllerBase
 
     public LeaderboardController(ILeaderboardManager leaderboardManager) => _leaderboardManager = leaderboardManager;
 
-    [HttpGet("api/round/{roundId:guid}/leaderboard")]
+    [HttpGet("api/rounds/{roundId:guid}/leaderboard")]
     public async Task<IActionResult> GetLeaderboard(Guid roundId)
     {
         var leaderboard = await _leaderboardManager.GetLeaderboardAsync(roundId);

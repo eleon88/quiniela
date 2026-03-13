@@ -2,12 +2,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s ease;
 
-  &:hover { color: #3e59ed; }
+  &:hover { color: var(--q-accent-hover); }
 
   mat-icon {
     font-size: 1.1rem;
@@ -25,10 +25,10 @@
     font-size: 1.6rem;
     width: 1.6rem;
     height: 1.6rem;
-    color: #888;
+    color: var(--q-accent);
   }
 
-  h2 { font-size: 1.5rem; color: #e0e0e0; }
+  h2 { font-size: 1.5rem; color: var(--q-text); }
 }
 
 .leaderboard-list {
@@ -41,15 +41,15 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   border-radius: 6px;
   padding: 0.8rem 1.1rem;
   transition: border-color 0.2s ease;
 
-  &.top-1 { border-color: #b8860b; background-color: #1f1a0e; }
-  &.top-2 { border-color: #707070; background-color: #191919; }
-  &.top-3 { border-color: #7c4a1a; background-color: #1c1410; }
+  &.top-1 { border-color: var(--q-top1-border); background-color: var(--q-top1-bg); }
+  &.top-2 { border-color: var(--q-top2-border); background-color: var(--q-top2-bg); }
+  &.top-3 { border-color: var(--q-top3-border); background-color: var(--q-top3-bg); }
 }
 
 .rank {
@@ -62,7 +62,7 @@
 .rank-number {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #888;
+  color: var(--q-accent);
   min-width: 1.5rem;
   text-align: center;
 }
@@ -72,26 +72,26 @@
   width: 1.3rem;
   height: 1.3rem;
 
-  &.gold   { color: #f5c842; }
-  &.silver { color: #c0c0c0; }
-  &.bronze { color: #cd7f32; }
+  &.gold   { color: var(--q-medal-gold); }
+  &.silver { color: var(--q-medal-silver); }
+  &.bronze { color: var(--q-medal-bronze); }
 }
 
 .display-name {
   flex: 1;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--q-text);
 }
 
 .score {
   font-size: 1rem;
   font-weight: 700;
-  color: #e0e0e0;
+  color: var(--q-text);
 
   .pts {
     font-size: 0.75rem;
     font-weight: 400;
-    color: #888;
+    color: var(--q-accent);
   }
 }

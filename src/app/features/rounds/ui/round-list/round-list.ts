@@ -5,9 +5,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RoundsService } from '../../services/rounds.service';
-import { RoundStatus } from '../../models/round';
 import { LoadingComponent } from '../../../../shared/components/loading/loading';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message';
+import { STATUS_LABEL, STATUS_CLASS } from '../../../../shared/constants/round-status';
 
 @Component({
   selector: 'app-round-list',
@@ -20,19 +20,8 @@ export class RoundListComponent {
 
   private roundsService = inject(RoundsService);
 
-  readonly statusLabel: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'Draft',
-    [RoundStatus.Open]: 'Open',
-    [RoundStatus.Active]: 'Active',
-    [RoundStatus.Completed]: 'Completed',
-  };
-
-  readonly statusClass: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'status-draft',
-    [RoundStatus.Open]: 'status-open',
-    [RoundStatus.Active]: 'status-active',
-    [RoundStatus.Completed]: 'status-completed',
-  };
+  readonly statusLabel = STATUS_LABEL;
+  readonly statusClass = STATUS_CLASS;
 
   rounds = rxResource({
     params: () => this.boardId(),

@@ -13,6 +13,7 @@ import { RoundStatus } from '../../../rounds/models/round';
 import { MatchResult } from '../../../rounds/models/match';
 import { LoadingComponent } from '../../../../shared/components/loading/loading';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message';
+import { STATUS_LABEL, STATUS_CLASS, RESULT_LABEL } from '../../../../shared/constants/round-status';
 
 @Component({
   selector: 'app-admin-round',
@@ -38,23 +39,19 @@ export class AdminRoundComponent {
   private adminService = inject(AdminService);
   private fb = inject(FormBuilder);
 
-  roundVersion = signal(0);
-  matchesVersion = signal(0);
-  participantsVersion = signal(0);
-
   round = rxResource({
-    params: () => ({ boardId: this.boardId(), roundId: this.roundId(), v: this.roundVersion() }),
-    stream: ({ params }) => this.roundsService.getRound(params.boardId, params.roundId),
+    params: () => this.roundId(),
+    stream: ({ params: roundId }) => this.roundsService.getRound(roundId),
   });
 
   matches = rxResource({
-    params: () => ({ roundId: this.roundId(), v: this.matchesVersion() }),
-    stream: ({ params }) => this.roundsService.getMatches(params.roundId),
+    params: () => this.roundId(),
+    stream: ({ params: roundId }) => this.roundsService.getMatches(roundId),
   });
 
   participants = rxResource({
-    params: () => ({ roundId: this.roundId(), v: this.participantsVersion() }),
-    stream: ({ params }) => this.adminService.getParticipants(params.roundId),
+    params: () => this.roundId(),
+    stream: ({ params: roundId }) => this.adminService.getParticipants(roundId),
   });
 
   showAddMatchForm = signal(false);
@@ -74,26 +71,9 @@ export class AdminRoundComponent {
   readonly RoundStatus = RoundStatus;
   readonly MatchResult = MatchResult;
 
-  readonly statusLabel: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'Draft',
-    [RoundStatus.Open]: 'Open',
-    [RoundStatus.Active]: 'Active',
-    [RoundStatus.Completed]: 'Completed',
-  };
-
-  readonly statusClass: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'status-draft',
-    [RoundStatus.Open]: 'status-open',
-    [RoundStatus.Active]: 'status-active',
-    [RoundStatus.Completed]: 'status-completed',
-  };
-
-  readonly resultLabel: Record<MatchResult, string> = {
-    [MatchResult.Pending]: 'Pending',
-    [MatchResult.HomeWin]: 'Home Win',
-    [MatchResult.AwayWin]: 'Away Win',
-    [MatchResult.Draw]: 'Draw',
-  };
+  readonly statusLabel = STATUS_LABEL;
+  readonly statusClass = STATUS_CLASS;
+  readonly resultLabel = RESULT_LABEL;
 
   private readonly nextStatusMap: Partial<Record<RoundStatus, RoundStatus>> = {
     [RoundStatus.Draft]: RoundStatus.Open,
@@ -114,7 +94,7 @@ export class AdminRoundComponent {
     this.adminService.updateRoundStatus(this.roundId(), next).subscribe({
       next: () => {
         this.updatingStatus.set(false);
-        this.roundVersion.update(v => v + 1);
+        this.round.reload();
       },
       error: () => this.updatingStatus.set(false),
     });
@@ -126,7 +106,7 @@ export class AdminRoundComponent {
     this.adminService.updateMatchResult(matchId, result).subscribe({
       next: () => {
         this.updatingMatchId.set(null);
-        this.matchesVersion.update(v => v + 1);
+        this.matches.reload();
       },
       error: () => this.updatingMatchId.set(null),
     });
@@ -147,7 +127,7 @@ export class AdminRoundComponent {
         this.submittingMatch.set(false);
         this.showAddMatchForm.set(false);
         this.addMatchForm.reset();
-        this.matchesVersion.update(v => v + 1);
+        this.matches.reload();
       },
       error: () => {
         this.submittingMatch.set(false);
@@ -162,7 +142,7 @@ export class AdminRoundComponent {
     this.adminService.activateParticipant(participantId).subscribe({
       next: () => {
         this.activatingParticipantId.set(null);
-        this.participantsVersion.update(v => v + 1);
+        this.participants.reload();
       },
       error: () => this.activatingParticipantId.set(null),
     });

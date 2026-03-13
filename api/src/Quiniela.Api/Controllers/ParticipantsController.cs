@@ -18,7 +18,7 @@ public class ParticipantsController : ControllerBase
         _userManager = userManager;
     }
 
-    [HttpPost("api/round/{roundId:guid}/participate")]
+    [HttpPost("api/rounds/{roundId:guid}/participate")]
     public async Task<IActionResult> Participate(Guid roundId, [FromBody] ParticipateRequest request)
     {
         Guid? userId = null;
@@ -31,10 +31,10 @@ public class ParticipantsController : ControllerBase
         }
 
         var participant = await _participantManager.ParticipateAsync(roundId, request, userId);
-        return Created($"/api/participant/{participant.Id}", participant);
+        return Created($"/api/participants/{participant.Id}", participant);
     }
 
-    [HttpPut("api/participant/{id:guid}/activate")]
+    [HttpPut("api/participants/{id:guid}/activate")]
     [Authorize]
     [BoardAdminAuthorize(BoardResourceType.Participant)]
     public async Task<IActionResult> Activate(Guid id)

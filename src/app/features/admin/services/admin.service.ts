@@ -29,26 +29,26 @@ export class AdminService {
   }
 
   createRound(boardId: string, payload: CreateRoundPayload): Observable<Round> {
-    return this.http.post<Round>(`${this.apiUrl}/boards/${boardId}/round`, payload);
+    return this.http.post<Round>(`${this.apiUrl}/boards/${boardId}/rounds`, payload);
   }
 
   createMatch(roundId: string, payload: CreateMatchPayload): Observable<Match> {
-    return this.http.post<Match>(`${this.apiUrl}/round/${roundId}/matches`, payload);
+    return this.http.post<Match>(`${this.apiUrl}/rounds/${roundId}/matches`, payload);
   }
 
   updateRoundStatus(roundId: string, status: RoundStatus): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/round/${roundId}/status`, { status });
+    return this.http.put<void>(`${this.apiUrl}/rounds/${roundId}/status`, { status });
   }
 
   updateMatchResult(matchId: string, result: MatchResult): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/match/${matchId}/result`, { result });
+    return this.http.put<void>(`${this.apiUrl}/matches/${matchId}/result`, { result });
   }
 
   getParticipants(roundId: string): Observable<Participant[]> {
-    return this.http.get<Participant[]>(`${this.apiUrl}/round/${roundId}/participants`);
+    return this.http.get<Participant[]>(`${this.apiUrl}/rounds/${roundId}/participants`);
   }
 
   activateParticipant(participantId: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/participant/${participantId}/activate`, {});
+    return this.http.put<void>(`${this.apiUrl}/participants/${participantId}/activate`, {});
   }
 }

@@ -25,6 +25,12 @@ public class RoundManager : IRoundManager
         return rounds.Select(MapToResponse);
     }
 
+    public async Task<RoundResponse?> GetByIdAsync(Guid id)
+    {
+        var round = await _roundRepo.GetByIdAsync(id);
+        return round is null ? null : MapToResponse(round);
+    }
+
     public async Task<RoundResponse> CreateAsync(Guid boardId, CreateRoundRequest request)
     {
         var round = await _roundRepo.CreateAsync(new Round

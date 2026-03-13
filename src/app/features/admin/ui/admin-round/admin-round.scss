@@ -2,12 +2,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s ease;
 
-  &:hover { color: #3e59ed; }
+  &:hover { color: var(--q-accent-hover); }
 
   mat-icon {
     font-size: 1.1rem;
@@ -21,8 +21,8 @@
   font-size: 0.75rem;
   padding: 0.2em 0.6em;
   border-radius: 4px;
-  background-color: #1a2a5e;
-  color: #7b9cef;
+  background-color: var(--q-admin-bg);
+  color: var(--q-admin-fg);
   font-weight: 500;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -32,42 +32,42 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   font-size: 0.9rem;
 
   mat-icon {
     font-size: 1rem;
     width: 1rem;
     height: 1rem;
-    color: #888;
+    color: var(--q-accent);
   }
 }
 
-.separator { color: #555; }
+.separator { color: var(--q-separator); }
 
 .section-title {
   font-size: 1.05rem;
-  color: #e0e0e0;
+  color: var(--q-text);
   font-weight: 500;
 }
 
 .section {
-  border-top: 1px solid #2a2a2a;
+  border-top: 1px solid var(--q-input);
   padding-top: 1.5rem;
 }
 
 .status-action {
-  background-color: #1a1a1a;
-  border: 1px solid #333;
+  background-color: var(--q-surface-alt);
+  border: 1px solid var(--q-border-soft);
   border-radius: 8px;
   padding: 1rem 1.25rem;
 
-  strong { color: #e0e0e0; }
+  strong { color: var(--q-text); }
 }
 
 .create-form {
-  background-color: #1a1a1a;
-  border: 1px solid #333;
+  background-color: var(--q-surface-alt);
+  border: 1px solid var(--q-border-soft);
   border-radius: 8px;
   padding: 1.25rem;
 }
@@ -83,8 +83,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   border-radius: 6px;
   padding: 0.75rem 1rem;
   flex-wrap: wrap;
@@ -102,7 +102,7 @@
 
 .team {
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--q-text);
   min-width: 5rem;
 
   &.home-team { text-align: right; }
@@ -110,7 +110,7 @@
 }
 
 .vs {
-  color: #666;
+  color: var(--q-text-dim);
   font-size: 0.8rem;
 }
 
@@ -118,7 +118,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #888;
+  color: var(--q-accent);
   font-size: 0.82rem;
 
   mat-icon { font-size: 0.95rem; width: 0.95rem; height: 0.95rem; }
@@ -134,7 +134,7 @@
   font-size: 1rem;
   width: 1rem;
   height: 1rem;
-  color: #666;
+  color: var(--q-text-dim);
 }
 
 .result-buttons {
@@ -150,9 +150,9 @@
   line-height: 1.75rem !important;
 
   &.active {
-    background-color: #1e4d2b !important;
-    color: #6fcf97 !important;
-    border-color: #6fcf97 !important;
+    background-color: var(--q-status-open-bg) !important;
+    color: var(--q-status-open-fg) !important;
+    border-color: var(--q-status-open-fg) !important;
   }
 }
 
@@ -163,10 +163,10 @@
   border-radius: 4px;
   font-weight: 500;
 
-  &.status-draft     { background-color: #2a2a2a; color: #888888; }
-  &.status-open      { background-color: #1e4d2b; color: #6fcf97; }
-  &.status-active    { background-color: #0d2a4d; color: #5b9bd5; }
-  &.status-completed { background-color: #2d1a3d; color: #b39ddb; }
+  &.status-draft     { background-color: var(--q-status-draft-bg); color: var(--q-status-draft-fg); }
+  &.status-open      { background-color: var(--q-status-open-bg); color: var(--q-status-open-fg); }
+  &.status-active    { background-color: var(--q-status-active-bg); color: var(--q-status-active-fg); }
+  &.status-completed { background-color: var(--q-status-completed-bg); color: var(--q-status-completed-fg); }
 }
 
 .participants-list {
@@ -180,8 +180,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   border-radius: 6px;
   padding: 0.65rem 1rem;
   flex-wrap: wrap;
@@ -198,7 +198,7 @@
 
 .participant-name {
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--q-text);
   font-size: 0.9rem;
 }
 
@@ -206,21 +206,21 @@
   font-size: 0.7rem;
   padding: 0.15em 0.5em;
   border-radius: 4px;
-  background-color: #2a2a2a;
-  color: #888;
+  background-color: var(--q-input);
+  color: var(--q-accent);
 }
 
 .participant-score {
   font-size: 0.85rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
 }
 
 .active-badge {
   font-size: 0.75rem;
   padding: 0.2em 0.6em;
   border-radius: 4px;
-  background-color: #1e4d2b;
-  color: #6fcf97;
+  background-color: var(--q-status-open-bg);
+  color: var(--q-status-open-fg);
   font-weight: 500;
 }
 

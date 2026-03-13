@@ -35,15 +35,18 @@ export class PredictComponent {
   private predictionsService = inject(PredictionsService);
   private router = inject(Router);
 
-  displayName = new FormControl('', { nonNullable: true, validators: [Validators.required] });
+  displayName = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\w\s\-'.]+$/)],
+  });
   private displayNameValue = toSignal(this.displayName.valueChanges, { initialValue: '' });
   selections = signal<Map<string, SelectedOutcome>>(new Map());
   submitting = signal(false);
   submitError = signal('');
 
   round = rxResource({
-    params: () => ({ boardId: this.boardId(), roundId: this.roundId() }),
-    stream: ({ params }) => this.roundsService.getRound(params.boardId, params.roundId),
+    params: () => this.roundId(),
+    stream: ({ params: id }) => this.roundsService.getRound(id),
   });
 
   matches = rxResource({
@@ -63,16 +66,20 @@ export class PredictComponent {
 
   readonly SelectedOutcome = SelectedOutcome;
 
+  selectionByMatch = computed(() => {
+    const map: Record<string, SelectedOutcome> = {};
+    for (const [id, outcome] of this.selections()) {
+      map[id] = outcome;
+    }
+    return map;
+  });
+
   selectOutcome(matchId: string, outcome: SelectedOutcome): void {
     this.selections.update(map => {
       const next = new Map(map);
       next.set(matchId, outcome);
       return next;
     });
-  }
-
-  getSelection(matchId: string): SelectedOutcome | undefined {
-    return this.selections().get(matchId);
   }
 
   submit(): void {

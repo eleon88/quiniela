@@ -6,6 +6,7 @@ namespace Quiniela.Api.Managers.Interfaces;
 public interface IRoundManager
 {
     Task<IEnumerable<RoundResponse>> GetByBoardIdAsync(Guid boardId);
+    Task<RoundResponse?> GetByIdAsync(Guid id);
     Task<RoundResponse> CreateAsync(Guid boardId, CreateRoundRequest request);
     Task UpdateStatusAsync(Guid roundId, RoundStatus newStatus);
 }

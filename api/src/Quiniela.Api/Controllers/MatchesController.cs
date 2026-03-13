@@ -13,23 +13,23 @@ public class MatchesController : ControllerBase
 
     public MatchesController(IMatchManager matchManager) => _matchManager = matchManager;
 
-    [HttpGet("api/round/{roundId:guid}/matches")]
+    [HttpGet("api/rounds/{roundId:guid}/matches")]
     public async Task<IActionResult> GetByRoundId(Guid roundId)
     {
         var matches = await _matchManager.GetByRoundIdAsync(roundId);
         return Ok(matches);
     }
 
-    [HttpPost("api/round/{id:guid}/matches")]
+    [HttpPost("api/rounds/{id:guid}/matches")]
     [Authorize]
     [BoardAdminAuthorize(BoardResourceType.Round)]
     public async Task<IActionResult> CreateBatch(Guid id, [FromBody] CreateMatchesRequest request)
     {
         var matches = await _matchManager.CreateBatchAsync(id, request);
-        return Created($"/api/round/{id}/matches", matches);
+        return Created($"/api/rounds/{id}/matches", matches);
     }
 
-    [HttpPut("api/match/{id:guid}/result")]
+    [HttpPut("api/matches/{id:guid}/result")]
     [Authorize]
     [BoardAdminAuthorize(BoardResourceType.Match)]
     public async Task<IActionResult> UpdateResult(Guid id, [FromBody] UpdateMatchResultRequest request)

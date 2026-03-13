@@ -17,13 +17,18 @@
     <div class="name-field mb-4">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Display Name</mat-label>
-        <input matInput [formControl]="displayName" placeholder="Enter your name" />
+        <input matInput [formControl]="displayName" placeholder="Enter your name" maxlength="50" />
+        @if (displayName.hasError('pattern')) {
+          <mat-error>Only letters, numbers, spaces, hyphens, apostrophes, and periods allowed.</mat-error>
+        }
+        <mat-hint align="end">{{ displayName.value.length }} / 50</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="matches-list">
       @for (match of matches.value(); track match.id) {
-        <div class="match-card" [class.has-selection]="getSelection(match.id) !== undefined">
+        @let sel = selectionByMatch()[match.id];
+        <div class="match-card" [class.has-selection]="sel !== undefined">
           <div class="match-teams">
             <span class="team home-team">{{ match.homeTeam }}</span>
             <span class="vs">vs</span>
@@ -33,7 +38,7 @@
             <button
               type="button"
               class="outcome-btn"
-              [class.selected]="getSelection(match.id) === SelectedOutcome.HomeWin"
+              [class.selected]="sel === SelectedOutcome.HomeWin"
               (click)="selectOutcome(match.id, SelectedOutcome.HomeWin)"
             >
               Home
@@ -41,7 +46,7 @@
             <button
               type="button"
               class="outcome-btn draw"
-              [class.selected]="getSelection(match.id) === SelectedOutcome.Draw"
+              [class.selected]="sel === SelectedOutcome.Draw"
               (click)="selectOutcome(match.id, SelectedOutcome.Draw)"
             >
               Draw
@@ -49,7 +54,7 @@
             <button
               type="button"
               class="outcome-btn"
-              [class.selected]="getSelection(match.id) === SelectedOutcome.AwayWin"
+              [class.selected]="sel === SelectedOutcome.AwayWin"
               (click)="selectOutcome(match.id, SelectedOutcome.AwayWin)"
             >
               Away

@@ -17,6 +17,43 @@
   --q-success:       #81C784;
   --q-warning:       #FFD54F;
   --q-selection:     rgba(136, 136, 136, 0.25);
+
+  // Surface variants
+  --q-surface-alt:   #1A1A1A; // form / panel backgrounds
+  --q-border-soft:   #333333; // softer borders
+  --q-separator:     #555555; // separators
+  --q-text-dim:      #666666; // dimmed text (vs labels, lock icons)
+
+  // Status colors
+  --q-status-draft-bg:     #2A2A2A;
+  --q-status-draft-fg:     #888888;
+  --q-status-open-bg:      #1E4D2B;
+  --q-status-open-fg:      #6FCF97;
+  --q-status-active-bg:    #0D2A4D;
+  --q-status-active-fg:    #5B9BD5;
+  --q-status-completed-bg: #2D1A3D;
+  --q-status-completed-fg: #B39DDB;
+
+  // Badge colors
+  --q-badge-private-bg:  #3D1A1A;
+  --q-badge-private-fg:  #E57373;
+  --q-badge-premium-bg:  #3D2E00;
+  --q-badge-premium-fg:  #F5C842;
+
+  // Admin badge
+  --q-admin-bg:    #1A2A5E;
+  --q-admin-fg:    #7B9CEF;
+
+  // Medal / leaderboard
+  --q-medal-gold:   #F5C842;
+  --q-medal-silver: #C0C0C0;
+  --q-medal-bronze: #CD7F32;
+  --q-top1-border:  #B8860B;
+  --q-top1-bg:      #1F1A0E;
+  --q-top2-border:  #707070;
+  --q-top2-bg:      #191919;
+  --q-top3-border:  #7C4A1A;
+  --q-top3-bg:      #1C1410;
 }
 
 // =============================================

@@ -15,8 +15,8 @@ export class LayoutComponent {
   private auth = inject(AuthService);
   private usersService = inject(UsersService);
 
-  protected isAuthenticated = toSignal(this.auth.isAuthenticated$, { initialValue: false });
-  protected user = toSignal(this.auth.user$);
+  isAuthenticated = toSignal(this.auth.isAuthenticated$, { initialValue: false });
+  user = toSignal(this.auth.user$);
 
   constructor() {
     this.auth.isAuthenticated$.pipe(
@@ -28,7 +28,9 @@ export class LayoutComponent {
         user?.name ?? user?.email ?? '',
       )),
       takeUntilDestroyed(),
-    ).subscribe();
+    ).subscribe({
+      error: (err) => console.error('User sync failed:', err),
+    });
   }
 
   login(): void {

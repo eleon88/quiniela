@@ -10,6 +10,6 @@ export class LeaderboardService {
   private apiUrl = `${environment.apiUrl}/api`;
 
   getLeaderboard(roundId: string): Observable<LeaderboardEntry[]> {
-    return this.http.get<LeaderboardEntry[]>(`${this.apiUrl}/round/${roundId}/leaderboard`);
+    return this.http.get<LeaderboardEntry[]>(`${this.apiUrl}/rounds/${roundId}/leaderboard`);
   }
 }

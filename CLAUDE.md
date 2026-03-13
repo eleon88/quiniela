@@ -18,7 +18,7 @@ Quiniela SaaS platform — a prediction pool web app where users create boards, 
 
 ```bash
 # Serve locally
-ng serve --configuration=local        # http://localhost:4200, API at localhost:3000
+ng serve --configuration=development  # http://localhost:4200
 
 # Build
 ng build                              # production build
@@ -30,7 +30,7 @@ ng test                               # Karma + Jasmine, launches Chrome
 # Lint (not configured yet — no ng lint schematic installed)
 ```
 
-Build configurations: `local`, `development`, `uat`, `production` — each swaps `src/environments/environment.ts` via `fileReplacements` in `angular.json`.
+Build configurations: `development`, `production` — each swaps `src/environments/environment.ts` via `fileReplacements` in `angular.json`.
 
 ## Architecture
 

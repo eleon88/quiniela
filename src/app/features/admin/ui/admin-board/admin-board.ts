@@ -12,6 +12,7 @@ import { AdminService } from '../../services/admin.service';
 import { RoundStatus } from '../../../rounds/models/round';
 import { LoadingComponent } from '../../../../shared/components/loading/loading';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message';
+import { STATUS_LABEL, STATUS_CLASS } from '../../../../shared/constants/round-status';
 
 @Component({
   selector: 'app-admin-board',
@@ -41,10 +42,9 @@ export class AdminBoardComponent {
     stream: ({ params: id }) => this.boardsService.getBoard(id),
   });
 
-  roundsVersion = signal(0);
   rounds = rxResource({
-    params: () => ({ boardId: this.boardId(), v: this.roundsVersion() }),
-    stream: ({ params }) => this.roundsService.getRounds(params.boardId),
+    params: () => this.boardId(),
+    stream: ({ params: boardId }) => this.roundsService.getRounds(boardId),
   });
 
   showCreateForm = signal(false);
@@ -59,19 +59,8 @@ export class AdminBoardComponent {
 
   readonly RoundStatus = RoundStatus;
 
-  readonly statusLabel: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'Draft',
-    [RoundStatus.Open]: 'Open',
-    [RoundStatus.Active]: 'Active',
-    [RoundStatus.Completed]: 'Completed',
-  };
-
-  readonly statusClass: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'status-draft',
-    [RoundStatus.Open]: 'status-open',
-    [RoundStatus.Active]: 'status-active',
-    [RoundStatus.Completed]: 'status-completed',
-  };
+  readonly statusLabel = STATUS_LABEL;
+  readonly statusClass = STATUS_CLASS;
 
   toggleCreateForm(): void {
     this.showCreateForm.update(v => !v);
@@ -88,7 +77,7 @@ export class AdminBoardComponent {
         this.submitting.set(false);
         this.showCreateForm.set(false);
         this.createForm.reset();
-        this.roundsVersion.update(v => v + 1);
+        this.rounds.reload();
       },
       error: () => {
         this.submitting.set(false);

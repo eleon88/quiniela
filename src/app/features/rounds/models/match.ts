@@ -1,8 +1,8 @@
 export enum MatchResult {
-  Pending = 0,
-  HomeWin = 1,
-  AwayWin = 2,
-  Draw = 3,
+  HomeWin = 0,
+  AwayWin = 1,
+  Draw = 2,
+  Pending = 3,
 }
 
 export interface Match {

@@ -2,13 +2,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #3e59ed;
+    color: var(--q-accent-hover);
   }
 
   mat-icon {
@@ -20,12 +20,12 @@
 
 .predict-header {
   h2 {
-    color: #e0e0e0;
+    color: var(--q-text);
     font-weight: 500;
   }
 
   .round-name {
-    color: #888;
+    color: var(--q-accent);
     font-size: 0.9rem;
     margin: 0;
   }
@@ -43,14 +43,14 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.75rem;
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   border-radius: 6px;
   padding: 0.85rem 1.1rem;
   transition: border-color 0.2s ease;
 
   &.has-selection {
-    border-color: #3e59ed;
+    border-color: var(--q-accent-hover);
   }
 }
 
@@ -63,7 +63,7 @@
 
 .team {
   font-weight: 500;
-  color: #e0e0e0;
+  color: var(--q-text);
   min-width: 6rem;
 
   &.home-team { text-align: right; }
@@ -71,7 +71,7 @@
 }
 
 .vs {
-  color: #666;
+  color: var(--q-text-dim);
   font-size: 0.8rem;
   font-weight: 400;
 }
@@ -82,9 +82,9 @@
 }
 
 .outcome-btn {
-  background-color: #2a2a2a;
-  color: #b0b0b0;
-  border: 1px solid #444;
+  background-color: var(--q-input);
+  color: var(--q-text-muted);
+  border: 1px solid var(--q-border);
   border-radius: 4px;
   padding: 0.35em 0.85em;
   font-size: 0.82rem;
@@ -93,20 +93,20 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: #333;
-    color: #e0e0e0;
+    background-color: var(--q-border-soft);
+    color: var(--q-text);
   }
 
   &.selected {
-    background-color: #3e59ed;
+    background-color: var(--q-accent-hover);
     color: #fff;
-    border-color: #3e59ed;
+    border-color: var(--q-accent-hover);
   }
 
   &.draw.selected {
-    background-color: #3d2e00;
-    color: #f5c842;
-    border-color: #f5c842;
+    background-color: var(--q-badge-premium-bg);
+    color: var(--q-badge-premium-fg);
+    border-color: var(--q-badge-premium-fg);
   }
 }
 

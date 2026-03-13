@@ -2,13 +2,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #3e59ed;
+    color: var(--q-accent-hover);
   }
 
   mat-icon {
@@ -19,13 +19,13 @@
 }
 
 .round-card {
-  background-color: #1e1e1e;
-  border: 1px solid #444;
+  background-color: var(--q-surface);
+  border: 1px solid var(--q-border);
   cursor: pointer;
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: #3e59ed;
+    border-color: var(--q-accent-hover);
   }
 }
 
@@ -37,28 +37,28 @@
   font-weight: 500;
 
   &.status-draft {
-    background-color: #2a2a2a;
-    color: #888888;
+    background-color: var(--q-status-draft-bg);
+    color: var(--q-status-draft-fg);
   }
 
   &.status-open {
-    background-color: #1e4d2b;
-    color: #6fcf97;
+    background-color: var(--q-status-open-bg);
+    color: var(--q-status-open-fg);
   }
 
   &.status-active {
-    background-color: #0d2a4d;
-    color: #5b9bd5;
+    background-color: var(--q-status-active-bg);
+    color: var(--q-status-active-fg);
   }
 
   &.status-completed {
-    background-color: #2d1a3d;
-    color: #b39ddb;
+    background-color: var(--q-status-completed-bg);
+    color: var(--q-status-completed-fg);
   }
 }
 
 .round-dates {
-  color: #b0b0b0;
+  color: var(--q-text-muted);
   font-size: 0.88rem;
 }
 
@@ -71,10 +71,10 @@
     font-size: 1rem;
     width: 1rem;
     height: 1rem;
-    color: #888;
+    color: var(--q-accent);
   }
 }
 
 .separator {
-  color: #555;
+  color: var(--q-separator);
 }

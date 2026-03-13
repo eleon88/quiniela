@@ -9,6 +9,7 @@ import { RoundStatus } from '../../models/round';
 import { MatchResult } from '../../models/match';
 import { LoadingComponent } from '../../../../shared/components/loading/loading';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message';
+import { STATUS_LABEL, STATUS_CLASS, RESULT_LABEL, RESULT_CLASS } from '../../../../shared/constants/round-status';
 
 @Component({
   selector: 'app-round-detail',
@@ -23,8 +24,8 @@ export class RoundDetailComponent {
   private roundsService = inject(RoundsService);
 
   round = rxResource({
-    params: () => ({ boardId: this.boardId(), roundId: this.roundId() }),
-    stream: ({ params }) => this.roundsService.getRound(params.boardId, params.roundId),
+    params: () => this.roundId(),
+    stream: ({ params: id }) => this.roundsService.getRound(id),
   });
 
   matches = rxResource({
@@ -35,31 +36,8 @@ export class RoundDetailComponent {
   readonly RoundStatus = RoundStatus;
   readonly MatchResult = MatchResult;
 
-  readonly statusLabel: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'Draft',
-    [RoundStatus.Open]: 'Open',
-    [RoundStatus.Active]: 'Active',
-    [RoundStatus.Completed]: 'Completed',
-  };
-
-  readonly statusClass: Record<RoundStatus, string> = {
-    [RoundStatus.Draft]: 'status-draft',
-    [RoundStatus.Open]: 'status-open',
-    [RoundStatus.Active]: 'status-active',
-    [RoundStatus.Completed]: 'status-completed',
-  };
-
-  readonly resultLabel: Record<MatchResult, string> = {
-    [MatchResult.Pending]: 'Pending',
-    [MatchResult.HomeWin]: 'Home Win',
-    [MatchResult.AwayWin]: 'Away Win',
-    [MatchResult.Draw]: 'Draw',
-  };
-
-  readonly resultClass: Record<MatchResult, string> = {
-    [MatchResult.Pending]: 'result-pending',
-    [MatchResult.HomeWin]: 'result-home',
-    [MatchResult.AwayWin]: 'result-away',
-    [MatchResult.Draw]: 'result-draw',
-  };
+  readonly statusLabel = STATUS_LABEL;
+  readonly statusClass = STATUS_CLASS;
+  readonly resultLabel = RESULT_LABEL;
+  readonly resultClass = RESULT_CLASS;
 }

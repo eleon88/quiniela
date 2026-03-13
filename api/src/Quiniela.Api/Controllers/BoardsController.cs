@@ -60,7 +60,7 @@ public class BoardsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = board.Id }, board);
     }
 
-    [HttpPost("{id:guid}/round")]
+    [HttpPost("{id:guid}/rounds")]
     [Authorize]
     [BoardAdminAuthorize(BoardResourceType.Board)]
     public async Task<IActionResult> CreateRound(Guid id, [FromBody] CreateRoundRequest request)
