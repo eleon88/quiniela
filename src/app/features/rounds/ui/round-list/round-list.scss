@@ -1,0 +1,80 @@
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #b0b0b0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #3e59ed;
+  }
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+.round-card {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: #3e59ed;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.2em 0.55em;
+  border-radius: 4px;
+  font-weight: 500;
+
+  &.status-draft {
+    background-color: #2a2a2a;
+    color: #888888;
+  }
+
+  &.status-open {
+    background-color: #1e4d2b;
+    color: #6fcf97;
+  }
+
+  &.status-active {
+    background-color: #0d2a4d;
+    color: #5b9bd5;
+  }
+
+  &.status-completed {
+    background-color: #2d1a3d;
+    color: #b39ddb;
+  }
+}
+
+.round-dates {
+  color: #b0b0b0;
+  font-size: 0.88rem;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    color: #888;
+  }
+}
+
+.separator {
+  color: #555;
+}
