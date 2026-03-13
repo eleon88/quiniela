@@ -33,7 +33,10 @@
       "WebFetch(domain:www.angulararchitects.io)",
       "Bash(git:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(python3:*)",
+      "Bash(node:*)",
+      "Bash(npm update:*)"
     ]
   }
 }
