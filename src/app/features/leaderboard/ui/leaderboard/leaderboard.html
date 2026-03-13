@@ -17,7 +17,7 @@
     <p class="text-secondary">No participants yet.</p>
   } @else {
     <div class="leaderboard-list">
-      @for (entry of leaderboard.value(); track entry.id; let i = $index) {
+      @for (entry of leaderboard.value(); track $index; let i = $index) {
         <div class="entry-row" [class.top-1]="i === 0" [class.top-2]="i === 1" [class.top-3]="i === 2">
           <div class="rank">
             @if (i === 0) {
