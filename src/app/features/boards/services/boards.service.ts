@@ -12,4 +12,8 @@ export class BoardsService {
   getBoards(): Observable<Board[]> {
     return this.http.get<Board[]>(this.apiUrl);
   }
+
+  getBoard(id: string): Observable<Board> {
+    return this.http.get<Board>(`${this.apiUrl}/${id}`);
+  }
 }

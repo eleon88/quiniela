@@ -1,3 +1,40 @@
-<h2>Board Detail</h2>
-<p>Board ID: {{ boardId() }}</p>
-<a routerLink="rounds">View Rounds</a>
+<div class="container py-4">
+  @if (board.isLoading()) {
+    <app-loading />
+  } @else if (board.error()) {
+    <app-error-message message="Failed to load board. Please try again." />
+  } @else if (board.value(); as b) {
+    <div class="board-header mb-4">
+      <a routerLink="/boards" class="back-link">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Boards</span>
+      </a>
+      <div class="d-flex align-items-center gap-3 mt-3">
+        <h2 class="mb-0">{{ b.name }}</h2>
+        <div class="badges">
+          @if (b.isPublic) {
+            <span class="badge badge-public">Public</span>
+          } @else {
+            <span class="badge badge-private">Private</span>
+          }
+          @if (b.isPremium) {
+            <span class="badge badge-premium ms-1">Premium</span>
+          }
+        </div>
+      </div>
+      @if (b.description) {
+        <p class="board-description mt-2">{{ b.description }}</p>
+      }
+    </div>
+
+    <mat-card class="rounds-card">
+      <mat-card-header>
+        <mat-card-title>Rounds</mat-card-title>
+        <mat-card-subtitle>View all prediction rounds for this board</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <a mat-flat-button [routerLink]="['rounds']">View Rounds</a>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
