@@ -1,4 +1,70 @@
-<h2>Round Detail</h2>
-<p>Board ID: {{ boardId() }} | Round ID: {{ roundId() }}</p>
-<a routerLink="leaderboard">Leaderboard</a> |
-<a routerLink="predict">Predict</a>
+<div class="container py-4">
+  <a [routerLink]="['/boards', boardId(), 'rounds']" class="back-link">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Rounds</span>
+  </a>
+
+  @if (round.isLoading()) {
+    <app-loading />
+  } @else if (round.error()) {
+    <app-error-message message="Failed to load round. Please try again." />
+  } @else if (round.value(); as r) {
+    <div class="round-header mt-3 mb-4">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
+        <h2 class="mb-0">{{ r.name }}</h2>
+        <span class="status-badge {{ statusClass[r.status] }}">{{ statusLabel[r.status] }}</span>
+      </div>
+      <div class="round-dates mt-2">
+        <mat-icon>event</mat-icon>
+        <span>{{ r.startDateTime | date: 'mediumDate' }}</span>
+        <span class="separator">–</span>
+        <span>{{ r.endDateTime | date: 'mediumDate' }}</span>
+      </div>
+    </div>
+
+    <div class="actions mb-4 d-flex gap-2 flex-wrap">
+      <a mat-flat-button routerLink="leaderboard">
+        <mat-icon>leaderboard</mat-icon>
+        Leaderboard
+      </a>
+      @if (r.status === RoundStatus.Open) {
+        <a mat-stroked-button routerLink="predict">
+          <mat-icon>edit_note</mat-icon>
+          Submit Prediction
+        </a>
+      }
+    </div>
+
+    <h3 class="matches-title mb-3">Matches</h3>
+
+    @if (matches.isLoading()) {
+      <app-loading />
+    } @else if (matches.error()) {
+      <app-error-message message="Failed to load matches. Please try again." />
+    } @else if (!matches.value()?.length) {
+      <p class="text-secondary">No matches scheduled yet.</p>
+    } @else {
+      <div class="matches-list">
+        @for (match of matches.value(); track match.id) {
+          <div class="match-row">
+            <div class="match-teams">
+              <span class="team home-team" [class.winner]="match.result === MatchResult.HomeWin" [class.draw]="match.result === MatchResult.Draw">{{ match.homeTeam }}</span>
+              <span class="vs">vs</span>
+              <span class="team away-team" [class.winner]="match.result === MatchResult.AwayWin" [class.draw]="match.result === MatchResult.Draw">{{ match.awayTeam }}</span>
+            </div>
+            <div class="match-meta">
+              <span class="match-date">
+                <mat-icon>schedule</mat-icon>
+                {{ match.startDateTime | date: 'MMM d, h:mm a' }}
+              </span>
+              <span class="result-badge {{ resultClass[match.result] }}">{{ resultLabel[match.result] }}</span>
+              @if (match.isLocked) {
+                <mat-icon class="lock-icon" title="Locked">lock</mat-icon>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
