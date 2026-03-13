@@ -13,7 +13,7 @@ public class RoundsController : ControllerBase
 
     public RoundsController(IRoundManager roundManager) => _roundManager = roundManager;
 
-    [HttpGet("api/rounds/{boardId:guid}")]
+    [HttpGet("api/rounds/by-board/{boardId:guid}")]
     public async Task<IActionResult> GetByBoardId(Guid boardId)
     {
         var rounds = await _roundManager.GetByBoardIdAsync(boardId);

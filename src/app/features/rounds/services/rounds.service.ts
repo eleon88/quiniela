@@ -11,7 +11,7 @@ export class RoundsService {
   private apiUrl = `${environment.apiUrl}/api`;
 
   getRounds(boardId: string): Observable<Round[]> {
-    return this.http.get<Round[]>(`${this.apiUrl}/rounds/${boardId}`);
+    return this.http.get<Round[]>(`${this.apiUrl}/rounds/by-board/${boardId}`);
   }
 
   getRound(roundId: string): Observable<Round> {
