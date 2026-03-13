@@ -1,2 +1,36 @@
-<h2>Boards</h2>
-<p>Board list placeholder</p>
+<div class="container py-4">
+  <h2 class="mb-4">Boards</h2>
+
+  @if (boards.isLoading()) {
+    <app-loading />
+  } @else if (boards.error()) {
+    <app-error-message message="Failed to load boards. Please try again." />
+  } @else if (!boards.value()?.length) {
+    <p class="text-secondary">No boards found.</p>
+  } @else {
+    <div class="row g-3">
+      @for (board of boards.value(); track board.id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <mat-card class="board-card h-100" [routerLink]="['/boards', board.id]">
+            <mat-card-header>
+              <mat-card-title>{{ board.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="board-description">{{ board.description }}</p>
+              <div class="badges mt-2">
+                @if (board.isPublic) {
+                  <span class="badge badge-public">Public</span>
+                } @else {
+                  <span class="badge badge-private">Private</span>
+                }
+                @if (board.isPremium) {
+                  <span class="badge badge-premium ms-1">Premium</span>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      }
+    </div>
+  }
+</div>

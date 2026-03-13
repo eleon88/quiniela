@@ -1,0 +1,38 @@
+.board-card {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: #3e59ed;
+  }
+}
+
+.board-description {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25em 0.6em;
+  border-radius: 4px;
+  font-weight: 500;
+
+  &.badge-public {
+    background-color: #1e4d2b;
+    color: #6fcf97;
+  }
+
+  &.badge-private {
+    background-color: #3d1a1a;
+    color: #e57373;
+  }
+
+  &.badge-premium {
+    background-color: #3d2e00;
+    color: #f5c842;
+  }
+}
