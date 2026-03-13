@@ -1,0 +1,97 @@
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #b0b0b0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+
+  &:hover { color: #3e59ed; }
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  .header-icon {
+    font-size: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: #888;
+  }
+
+  h2 { font-size: 1.5rem; color: #e0e0e0; }
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.entry-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 0.8rem 1.1rem;
+  transition: border-color 0.2s ease;
+
+  &.top-1 { border-color: #b8860b; background-color: #1f1a0e; }
+  &.top-2 { border-color: #707070; background-color: #191919; }
+  &.top-3 { border-color: #7c4a1a; background-color: #1c1410; }
+}
+
+.rank {
+  min-width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rank-number {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #888;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.medal {
+  font-size: 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+
+  &.gold   { color: #f5c842; }
+  &.silver { color: #c0c0c0; }
+  &.bronze { color: #cd7f32; }
+}
+
+.display-name {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.score {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e0e0e0;
+
+  .pts {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #888;
+  }
+}
